@@ -38,9 +38,8 @@ time.sleep(10)
 
 for foldername in os.listdir(dir_path):
     if os.path.isdir(os.path.join(dir_path, foldername)):
-        CreateProject = driver.find_element(By.XPATH,
-                                            '//*[@id="projects-page"]/div[2]/div/div[1]/div/div/div/div[1]/div[2]/div/button')
-        CreateProject.click()
+
+        driver.get("http://localhost:9000/projects/create?mode=manual")
         time.sleep(10)
         ProjectName = driver.find_element(By.XPATH, '//*[@id="project-name"]')
         ProjectNameButton = driver.find_element(By.XPATH, '//*[@id="create-project"]/div/div/form/button')
@@ -58,17 +57,23 @@ for foldername in os.listdir(dir_path):
         TokenProvider = driver.find_element(By.XPATH,
                                             '//*[@id="container"]/div/div[2]/div/div[2]/div[3]/div/div[2]/button')
         TokenProvider.click()
-        DotNetSelector = driver.find_element(By.XPATH,
-                                             '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div/ul/li[3]/button')
-        DotNetSelector.click()
-        firstCommand = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div[2]/div[2]/div[3]/pre/text()').text
-        secondCommand = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div[2]/div[2]/div[4]/pre').text
-        thirdCommand = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div[2]/div[2]/div[5]/pre/text()').text
+        time.sleep(10)
+        CsSelector = driver.find_element(By.XPATH,
+                                             '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div/ul/li[4]/button')
+        CsSelector.click()
+        time.sleep(5)
+        WnSelector = driver.find_element(By.XPATH,
+                                             '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div[2]/ul/li[2]')
+        WnSelector.click()
+        firstCommand = driver.find_element(By.XPATH, '//*[@id="container"]/div/div[2]/div/div[3]/div[3]/div/div/div[3]/div/div[2]/div/pre').text
+
+        os.chdir(dir_path+"\\"+foldername)
         subprocess.run(firstCommand, shell=True)
-        subprocess.run(secondCommand, shell=True)
-        subprocess.run(thirdCommand, shell=True)
+        time.sleep(30)
+
         returnProject = driver.find_element(By.XPATH, '//*[@id="global-navigation"]/div/div/ul/li[1]/a')
         returnProject.click()
+        time.sleep(10)
 
 
 time.sleep(10)
